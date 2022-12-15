@@ -13,7 +13,6 @@
 #include <string>
 #include <functional>
 #include <algorithm>
-#include "maparray.h"
 #include <map>
 
 struct string_size_less
