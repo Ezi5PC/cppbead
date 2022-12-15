@@ -16,8 +16,10 @@ template <typename U, typename T> class map_array_util{
 			return true;
 		}
 		void copy(T array[], int to){
-			for(int i = 0; i < MIN(MIN(*dataptr->size(), sizeof(array)/sizeof(array[0])), to); i++){
-			    
+			for(int i = 0; i < MIN(MIN(*dataptr->size(), sizeof(array) / sizeof(array[0])), to); i++){
+			    if(array[i] != nullptr){
+			        *dataptr->at(i) = array[i];
+			    }
 			}
 		}
 };
