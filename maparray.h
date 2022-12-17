@@ -1,36 +1,41 @@
+#ifndef MAPARRAY_H
+#define MAPARRAY_H
+
 #include <iostream>
 #include <map>
+#include <memory>
 
 template <typename U, typename T> class map_array_util{
 	private:
-		std::map<U, T> &dataref;
+		std::map<U, T> * dataptr;
 	public:
-		map_array_util(std::map<U, T> map) : dataref(map){}
+		map_array_util(std::map<U, T> map) : dataptr(&map){}
 		bool equals(T array[], int max){
 			for(int i = 0; i < max; i++){
-				if(dataref.at(i) != array[i]){
+				if(*dataptr->at(i) != array[i]){
 					return false;
 				}
+				i++;
 			}
-			return true;
+			return i == max;
 		}
-		void copy(const T array[], int to){
-    		size_t i = 0;
-    		for(auto &x : dataref){
-				if(i < to){
-           	 		x.second = array[i];
-        		}
-        		i++;
-    		}
-    		writemap();
+		void copy(T array[], int to){
+		    int i = 0;
+		    for (auto &x : *dataptr)
+            {
+                if(i < to){
+                    x.second = array[i];
+                }
+                i++;
+            }
+		    writemap();
 		}
 		void writemap(){
-		    for (auto const& x : dataref)
+		    for (auto const& x : *dataptr)
             {
-                std::cout << x.first  // string (key)
-                << ':' 
-                 << x.second // string's value 
-                << std::endl;
+                std::cout << x.first << ", " << x.second << std::endl;
             }
 		}
 };
+
+#endif
